@@ -4,18 +4,15 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Pessoa extends Model {
-    static associate(models) {
-      
+    static associate(models) {    
       Pessoa.hasMany(models.Curso, {
         foreignKey: 'docente_id'
       });
-
       Pessoa.hasMany(models.Matricula, {
-        foreignKey: 'estudante_id'
+        foreignKey: 'estudante_id',
+        scope: { status: 'matriculado' },
+        as: 'aulasMatriculadas'
       });
-
-      
-
     }
   }
   Pessoa.init({
